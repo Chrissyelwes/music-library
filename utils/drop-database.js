@@ -9,7 +9,7 @@ require('dotenv').config({
 
 const { DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT } = process.env;
 
-const connection = async () => {
+const dropDatabase = async () => {
   try {
     const db = await mysql.createConnection({
       host: DB_HOST,
@@ -17,11 +17,12 @@ const connection = async () => {
       password: DB_PASSWORD,
       port: DB_PORT
     });
-    await db.query(`CREATE DATABASE IF NOT EXISTS ${DB_NAME}`);
-    db.close();
+
+    await db.query(`DROP DATABASE ${DB_NAME}`);
+    await db.close();
   } catch (err) {
     console.log(
-      'Could not drop database statement.'
+      'Your environment variables might be wrong. Please double check .env file'
     );
     console.log('Environment Variables are:', {
       DB_PASSWORD,
@@ -34,4 +35,4 @@ const connection = async () => {
   }
 };
 
-connection.query(`DROP DATABASE ${DB_NAME}`, () => connection.end());
+dropDatabase();
