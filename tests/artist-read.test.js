@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable semi */
 const { expect } = require('chai')
 const request = require('supertest')
@@ -17,11 +18,11 @@ describe('read artist', () => {
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Cat',
-        'Bop'
+        'Bop',
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Doja Cat',
-        'Pop'
+        'Pop',
       ])
     ]);
 
