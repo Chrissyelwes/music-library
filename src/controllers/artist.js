@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable comma-dangle */
 /* eslint-disable semi */
 const getDb = require('../services/db');
@@ -58,6 +59,27 @@ exports.update = async (req, res) => {
     const [
       { affectedRows },
     ] = await db.query('UPDATE Artist SET ? WHERE id = ?', [data, artistId]);
+
+    if (!affectedRows) {
+      res.sendStatus(404);
+    } else {
+      res.status(200).send();
+    }
+  } catch (err) {
+    res.sendStatus(500);
+  }
+
+  db.close();
+};
+
+exports.delete = async (req, res) => {
+  const db = await getDb();
+  const { artistId } = req.params;
+
+  try {
+    const [
+      { affectedRows },
+    ] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
 
     if (!affectedRows) {
       res.sendStatus(404);
